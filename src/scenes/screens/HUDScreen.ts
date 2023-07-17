@@ -20,7 +20,7 @@ class HUDScreen extends BaseScreen {
             width: 104,
             height: 90,
             pointerUpCallback: () => {
-                GameManager.updateGameState(GameState.PAUSE, this.scene)
+                GameManager.updateGameState(GameState.PAUSE)
             },
         })
 

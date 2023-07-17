@@ -101,6 +101,11 @@
                 "type": "image",
                 "key": "purpleMsg",
                 "url": "./assets/ui/purple-msg.png"
+            },
+            {
+                "type": "audio",
+                "key": "shoot",
+                "url": "./assets/audios/shoot.wav"
             }
         ]
     }

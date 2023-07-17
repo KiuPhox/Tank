@@ -50,7 +50,7 @@ class PauseScreen extends BaseScreen {
             texture: 'blueBtn',
             scale: 1,
             pointerUpCallback: () => {
-                GameManager.updateGameState(GameState.PLAYING, this.scene)
+                GameManager.updateGameState(GameState.PLAYING)
             },
         })
     }

@@ -1,3 +1,4 @@
+import SoundManager from '../managers/SoundManager'
 import { IBulletConstructor } from '../types/bullet'
 
 export class Bullet extends Phaser.GameObjects.Image {
@@ -12,6 +13,8 @@ export class Bullet extends Phaser.GameObjects.Image {
         this.initImage()
         this.scene.add.existing(this)
         b.screen.add(this)
+
+        SoundManager.playShootSound(new Phaser.Math.Vector2(b.x, b.y))
     }
 
     private initImage(): void {

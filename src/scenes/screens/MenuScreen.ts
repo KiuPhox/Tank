@@ -29,7 +29,7 @@ class MenuScreen extends BaseScreen {
 
     update(): void {
         if (this.active && this.startKey.isDown) {
-            GameManager.updateGameState(GameState.PLAYING, this.scene)
+            GameManager.updateGameState(GameState.PLAYING)
         }
     }
 

@@ -115,7 +115,7 @@ export class Player extends Tank {
         super.updateHealth()
         if (this.health === 0) {
             this.scene.scene.start()
-            GameManager.updateGameState(GameState.READY, this.scene)
+            GameManager.updateGameState(GameState.READY)
         }
     }
 }

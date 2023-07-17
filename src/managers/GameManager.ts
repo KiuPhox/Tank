@@ -1,16 +1,20 @@
+import GameScene from '../scenes/GameScene'
 import GameState from './GameState'
 
 class GameManager {
+    private static scene: GameScene
+
     private static currentState: GameState = GameState.READY
     private static previousState: GameState = GameState.READY
 
     public static emitter: Phaser.Events.EventEmitter
 
-    public static init(): void {
+    public static init(scene: GameScene): void {
+        this.scene = scene
         this.emitter = new Phaser.Events.EventEmitter()
     }
 
-    public static updateGameState(gameState: GameState, scene: Phaser.Scene): void {
+    public static updateGameState(gameState: GameState): void {
         if (this.currentState === gameState) return
         this.previousState = this.currentState
         this.currentState = gameState

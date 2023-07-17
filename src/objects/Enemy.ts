@@ -1,6 +1,7 @@
 import { Bullet } from './Bullet'
 import { IImage } from '../types/image'
 import Tank from './Tank'
+import { Random } from '../utils/Random'
 
 export class Enemy extends Tank {
     body: Phaser.Physics.Arcade.Body
@@ -50,7 +51,7 @@ export class Enemy extends Tank {
                     })
                 )
 
-                this.lastShoot = this.scene.time.now + 400
+                this.lastShoot = this.scene.time.now + Random.Int(400, 1000)
             }
         }
     }
