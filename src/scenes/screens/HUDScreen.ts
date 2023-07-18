@@ -7,12 +7,18 @@ import BaseScreen from './BaseScreen'
 
 class HUDScreen extends BaseScreen {
     private pauseButton: Button
+    private scoreBitmapText: Phaser.GameObjects.BitmapText
 
     constructor(s: IScreen) {
         super(s)
 
+        this.createPauseButton()
+        this.createScoreBitmapText()
+    }
+
+    private createPauseButton(): void {
         this.pauseButton = new Button({
-            scene: s.scene,
+            scene: this.scene,
             x: 0,
             y: 0,
             texture: 'pauseIcon',
@@ -27,6 +33,19 @@ class HUDScreen extends BaseScreen {
         Phaser.Display.Align.In.TopRight(this.pauseButton, (this.scene as GameScene).zone, -60, -60)
 
         this.add(this.pauseButton)
+    }
+
+    private createScoreBitmapText(): void {
+        this.scoreBitmapText = this.scene.add.bitmapText(0, 0, 'font', '0', 64)
+
+        Phaser.Display.Align.In.TopCenter(
+            this.scoreBitmapText,
+            (this.scene as GameScene).zone,
+            0,
+            -28
+        )
+
+        this.add(this.scoreBitmapText)
     }
 }
 

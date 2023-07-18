@@ -1,6 +1,6 @@
 import { IButton } from '../../types/button'
 
-export default class Button extends Phaser.GameObjects.Container {
+class Button extends Phaser.GameObjects.Container {
     public pointerDownCallback?: () => void
     public pointerUpCallback?: () => void
 
@@ -81,3 +81,5 @@ export default class Button extends Phaser.GameObjects.Container {
         })
     }
 }
+
+export default Button

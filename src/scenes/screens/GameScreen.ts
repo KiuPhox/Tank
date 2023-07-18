@@ -1,9 +1,9 @@
 import GameManager from '../../managers/GameManager'
 import GameState from '../../managers/GameState'
-import { Bullet } from '../../objects/Bullet'
-import { Enemy } from '../../objects/Enemy'
-import { Player } from '../../objects/Player'
-import { Obstacle } from '../../objects/Obstacle'
+import Bullet from '../../objects/Bullet'
+import Enemy from '../../objects/Enemy'
+import Player from '../../objects/Player'
+import Obstacle from '../../objects/Obstacle'
 import { IScreen } from '../../types/screen'
 import BaseScreen from './BaseScreen'
 

@@ -1,10 +1,13 @@
 import GameManager from '../../managers/GameManager'
 import GameState from '../../managers/GameState'
+import PlayerDataManager from '../../managers/PlayerDataManager'
 import Button from '../../objects/buttons/Button'
+import Checkbox from '../../objects/buttons/Checkbox'
 import { IScreen } from '../../types/screen'
 import BaseScreen from './BaseScreen'
 
 class PauseScreen extends BaseScreen {
+    private soundCheckbox: Checkbox
     private continueButton: Button
     private newGameButton: Button
     private modal: Phaser.GameObjects.NineSlice
@@ -15,8 +18,9 @@ class PauseScreen extends BaseScreen {
         this.createModal()
         this.createContinueButton()
         this.createNewGameButton()
+        this.createSoundCheckbox()
 
-        this.add([this.modal, this.continueButton, this.newGameButton])
+        this.add([this.newGameButton, this.soundCheckbox])
     }
 
     private createModal(): void {
@@ -32,13 +36,14 @@ class PauseScreen extends BaseScreen {
             50,
             50
         )
+        this.add(this.modal)
     }
 
     private createContinueButton(): void {
         this.continueButton = new Button({
             scene: this.scene,
             x: 0,
-            y: -60,
+            y: 0,
             width: 400,
             height: 120,
             leftWidth: 50,
@@ -53,13 +58,14 @@ class PauseScreen extends BaseScreen {
                 GameManager.updateGameState(GameState.PLAYING)
             },
         })
+        this.add(this.continueButton)
     }
 
     private createNewGameButton(): void {
         this.newGameButton = new Button({
             scene: this.scene,
             x: 0,
-            y: 60,
+            y: 130,
             width: 400,
             height: 120,
             leftWidth: 50,
@@ -74,6 +80,26 @@ class PauseScreen extends BaseScreen {
                 this.scene.scene.start('GameScene')
             },
         })
+    }
+
+    private createSoundCheckbox(): void {
+        this.soundCheckbox = new Checkbox({
+            scene: this.scene,
+            x: -100,
+            y: -130,
+            checked: false,
+            textureChecked: 'checkedBox',
+            textureUnchecked: 'uncheckedBox',
+            pointerUpCallback: () => {
+                this.soundCheckbox.trigger()
+                PlayerDataManager.setSound(this.soundCheckbox.checked)
+                this.scene.sound.setMute(!this.soundCheckbox.checked)
+            },
+        })
+
+        this.soundCheckbox.setChecked(PlayerDataManager.getSound())
+
+        this.add(this.scene.add.bitmapText(-50, -130, 'font', 'Sound', 50).setOrigin(0, 0.5))
     }
 
     public setActive(value: boolean): this {

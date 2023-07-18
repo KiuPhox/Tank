@@ -1,6 +1,6 @@
 import { IImage } from '../types/image'
 
-export class Obstacle extends Phaser.GameObjects.Image {
+class Obstacle extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
 
     constructor(aParams: IImage) {
@@ -19,3 +19,5 @@ export class Obstacle extends Phaser.GameObjects.Image {
         this.body.setImmovable(true)
     }
 }
+
+export default Obstacle

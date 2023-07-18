@@ -16,3 +16,15 @@ export interface IButton {
     pointerDownCallback?: () => void
     pointerUpCallback?: () => void
 }
+
+export interface ICheckbox {
+    scene: Phaser.Scene
+    x: number
+    y: number
+    textureChecked: string
+    textureUnchecked: string
+    checked?: boolean
+    scale?: number
+    pointerDownCallback?: () => void
+    pointerUpCallback?: () => void
+}

@@ -1,7 +1,7 @@
 import SoundManager from '../managers/SoundManager'
 import { IBulletConstructor } from '../types/bullet'
 
-export class Bullet extends Phaser.GameObjects.Image {
+class Bullet extends Phaser.GameObjects.Image {
     body: Phaser.Physics.Arcade.Body
 
     private bulletSpeed: number
@@ -34,3 +34,5 @@ export class Bullet extends Phaser.GameObjects.Image {
         )
     }
 }
+
+export default Bullet

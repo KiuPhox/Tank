@@ -10,7 +10,7 @@
                 "type": "bitmapFont",
                 "key": "font",
                 "textureURL": "./assets/font/font.png",
-                "fontDataURL": "./assets/font/font.fnt"
+                "fontDataURL": "./assets/font/font.xml"
             },
             {
                 "type": "image",
@@ -101,6 +101,16 @@
                 "type": "image",
                 "key": "purpleMsg",
                 "url": "./assets/ui/purple-msg.png"
+            },
+            {
+                "type": "image",
+                "key": "uncheckedBox",
+                "url": "./assets/ui/unchecked-box.png"
+            },
+            {
+                "type": "image",
+                "key": "checkedBox",
+                "url": "./assets/ui/checked-box.png"
             },
             {
                 "type": "audio",

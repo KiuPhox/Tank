@@ -1,10 +1,10 @@
-import { Bullet } from './Bullet'
+import Bullet from './Bullet'
 import { IImage } from '../types/image'
 import Tank from './Tank'
 import GameManager from '../managers/GameManager'
 import GameState from '../managers/GameState'
 
-export class Player extends Tank {
+class Player extends Tank {
     body: Phaser.Physics.Arcade.Body
 
     // input
@@ -119,3 +119,5 @@ export class Player extends Tank {
         }
     }
 }
+
+export default Player

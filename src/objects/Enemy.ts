@@ -1,9 +1,9 @@
-import { Bullet } from './Bullet'
+import Bullet from './Bullet'
 import { IImage } from '../types/image'
 import Tank from './Tank'
 import { Random } from '../utils/Random'
 
-export class Enemy extends Tank {
+class Enemy extends Tank {
     body: Phaser.Physics.Arcade.Body
 
     constructor(i: IImage) {
@@ -56,3 +56,5 @@ export class Enemy extends Tank {
         }
     }
 }
+
+export default Enemy

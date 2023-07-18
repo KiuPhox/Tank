@@ -1,5 +1,6 @@
 import GameManager from '../managers/GameManager'
 import GameState from '../managers/GameState'
+import PlayerDataManager from '../managers/PlayerDataManager'
 import SoundManager from '../managers/SoundManager'
 import GameScreen from './screens/GameScreen'
 import HUDScreen from './screens/HUDScreen'
@@ -21,6 +22,8 @@ class GameScene extends Phaser.Scene {
     init(): void {
         GameManager.init(this)
         SoundManager.init(this)
+
+        this.sound.setMute(!PlayerDataManager.getSound())
     }
 
     create(): void {
