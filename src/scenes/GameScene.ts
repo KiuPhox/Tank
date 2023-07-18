@@ -3,6 +3,7 @@ import GameState from '../managers/GameState'
 import PlayerDataManager from '../managers/PlayerDataManager'
 import ScoreManager from '../managers/ScoreManager'
 import SoundManager from '../managers/SoundManager'
+import GameOverScreen from './screens/GameOverScreen'
 import GameScreen from './screens/GameScreen'
 import HUDScreen from './screens/HUDScreen'
 import MenuScreen from './screens/MenuScreen'
@@ -15,6 +16,7 @@ class GameScene extends Phaser.Scene {
     private menuScreen: MenuScreen
     private HUDScreen: HUDScreen
     private pauseScreen: PauseScreen
+    private gameOverScreen: GameOverScreen
 
     constructor() {
         super({ key: 'GameScene' })
@@ -35,6 +37,7 @@ class GameScene extends Phaser.Scene {
         this.menuScreen = new MenuScreen({ scene: this })
         this.HUDScreen = new HUDScreen({ scene: this }).setActive(false)
         this.pauseScreen = new PauseScreen({ scene: this }).setVisible(false)
+        this.gameOverScreen = new GameOverScreen({ scene: this }).setVisible(false)
 
         GameManager.emitter.on('state-changed', this.onGameStateChanged)
     }
@@ -61,6 +64,11 @@ class GameScene extends Phaser.Scene {
             cameraPos.x + this.scale.width / 2,
             cameraPos.y + this.scale.height / 2
         )
+
+        this.gameOverScreen.setPosition(
+            cameraPos.x + this.scale.width / 2,
+            cameraPos.y + this.scale.height / 2
+        )
     }
 
     private onGameStateChanged = (gameState: GameState) => {
@@ -70,10 +78,15 @@ class GameScene extends Phaser.Scene {
             this.gameScreen.setActive(true)
             this.HUDScreen.setActive(true)
             this.pauseScreen.setActive(false)
+            this.gameOverScreen.setActive(false)
         } else if (gameState === GameState.PAUSE) {
             this.gameScreen.setLogicUpdate(false)
             this.HUDScreen.setActive(false)
             this.pauseScreen.setActive(true)
+        } else if (gameState === GameState.GAME_OVER) {
+            this.gameScreen.setLogicUpdate(false)
+            this.HUDScreen.setActive(false)
+            this.gameOverScreen.setActive(true)
         }
     }
 }

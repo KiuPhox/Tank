@@ -4,6 +4,9 @@ import Tank from './Tank'
 import GameManager from '../managers/GameManager'
 import GameState from '../managers/GameState'
 
+const MOVEMENT_SPEED = 200
+const ROTATE_SPEED = 0.005
+
 class Player extends Tank {
     body: Phaser.Physics.Arcade.Body
 
@@ -51,13 +54,13 @@ class Player extends Tank {
         if (this.cursors.up.isDown) {
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
-                this.speed,
+                MOVEMENT_SPEED,
                 this.body.velocity
             )
         } else if (this.cursors.down.isDown) {
             this.scene.physics.velocityFromRotation(
                 this.rotation - Math.PI / 2,
-                -this.speed,
+                -MOVEMENT_SPEED,
                 this.body.velocity
             )
         } else {
@@ -66,9 +69,9 @@ class Player extends Tank {
 
         // rotate tank
         if (this.cursors.left.isDown) {
-            this.rotation -= 0.002 * delta
+            this.rotation -= ROTATE_SPEED * delta
         } else if (this.cursors.right.isDown) {
-            this.rotation += 0.002 * delta
+            this.rotation += ROTATE_SPEED * delta
         }
     }
 
@@ -123,7 +126,7 @@ class Player extends Tank {
 
     public updateHealth(): void {
         super.updateHealth()
-        if (this.health === 0) {
+        if (this.health <= 0) {
             GameManager.updateGameState(GameState.GAME_OVER)
         }
     }
