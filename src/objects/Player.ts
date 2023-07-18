@@ -13,12 +13,16 @@ class Player extends Tank {
     private rotateKeyRight: Phaser.Input.Keyboard.Key
     private shootingKey: Phaser.Input.Keyboard.Key
 
-    public getBullets(): Phaser.GameObjects.Group {
-        return this.bullets
-    }
+    private isShootingPointerDown: boolean
 
     constructor(i: IImage) {
         super(i)
+
+        this.isShootingPointerDown = false
+
+        this.scene.input.on('pointermove', this.handlePointerMove)
+        this.scene.input.on('pointerdown', this.handlePointerDown)
+        this.scene.input.on('pointerup', this.handlePointerUp)
     }
 
     public initImage() {
@@ -27,8 +31,6 @@ class Player extends Tank {
         // input
         if (this.scene.input.keyboard) {
             this.cursors = this.scene.input.keyboard.createCursorKeys()
-            this.rotateKeyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-            this.rotateKeyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
             this.shootingKey = this.scene.input.keyboard.addKey(
                 Phaser.Input.Keyboard.KeyCodes.SPACE
             )
@@ -68,17 +70,10 @@ class Player extends Tank {
         } else if (this.cursors.right.isDown) {
             this.rotation += 0.002 * delta
         }
-
-        // rotate barrel
-        if (this.rotateKeyLeft.isDown) {
-            this.barrel.rotation -= 0.005 * delta
-        } else if (this.rotateKeyRight.isDown) {
-            this.barrel.rotation += 0.005 * delta
-        }
     }
 
     private handleShooting(): void {
-        if (this.shootingKey.isDown && this.scene.time.now > this.lastShoot) {
+        if (this.isShootingPointerDown && this.scene.time.now > this.lastShoot) {
             this.scene.cameras.main.shake(20, 0.005)
             this.scene.tweens.add({
                 targets: this,
@@ -111,12 +106,34 @@ class Player extends Tank {
         }
     }
 
+    private handlePointerMove = (pointer: PointerEvent) => {
+        const angle = new Phaser.Math.Vector2(
+            pointer.x + this.scene.cameras.main.scrollX - this.x,
+            pointer.y + this.scene.cameras.main.scrollY - this.y
+        ).angle()
+
+        this.barrel.rotation = angle + Math.PI / 2
+    }
+    private handlePointerDown = () => {
+        this.isShootingPointerDown = true
+    }
+    private handlePointerUp = () => {
+        this.isShootingPointerDown = false
+    }
+
     public updateHealth(): void {
         super.updateHealth()
         if (this.health === 0) {
-            this.scene.scene.start()
-            GameManager.updateGameState(GameState.READY)
+            GameManager.updateGameState(GameState.GAME_OVER)
         }
+    }
+
+    destroy(fromScene?: boolean | undefined): void {
+        this.scene.input.off('pointermove', this.handlePointerMove)
+        this.scene.input.off('pointerdown', this.handlePointerDown)
+        this.scene.input.off('pointerup', this.handlePointerUp)
+
+        super.destroy(fromScene)
     }
 }
 

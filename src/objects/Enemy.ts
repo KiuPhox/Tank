@@ -2,6 +2,7 @@ import Bullet from './Bullet'
 import { IImage } from '../types/image'
 import Tank from './Tank'
 import { Random } from '../utils/Random'
+import ScoreManager from '../managers/ScoreManager'
 
 class Enemy extends Tank {
     body: Phaser.Physics.Arcade.Body
@@ -53,6 +54,13 @@ class Enemy extends Tank {
 
                 this.lastShoot = this.scene.time.now + Random.Int(400, 1000)
             }
+        }
+    }
+
+    public updateHealth(): void {
+        super.updateHealth()
+        if (this.health <= 0) {
+            ScoreManager.updateScore(ScoreManager.getScore() + 1)
         }
     }
 }

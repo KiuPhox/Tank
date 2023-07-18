@@ -1,5 +1,6 @@
 import GameManager from '../../managers/GameManager'
 import GameState from '../../managers/GameState'
+import ScoreManager from '../../managers/ScoreManager'
 import Button from '../../objects/buttons/Button'
 import { IScreen } from '../../types/screen'
 import GameScene from '../GameScene'
@@ -14,6 +15,8 @@ class HUDScreen extends BaseScreen {
 
         this.createPauseButton()
         this.createScoreBitmapText()
+
+        ScoreManager.emitter.on('score-updated', this.handleScoreUpdated)
     }
 
     private createPauseButton(): void {
@@ -46,6 +49,10 @@ class HUDScreen extends BaseScreen {
         )
 
         this.add(this.scoreBitmapText)
+    }
+
+    private handleScoreUpdated = (score: number) => {
+        this.scoreBitmapText.setText(score.toString())
     }
 }
 

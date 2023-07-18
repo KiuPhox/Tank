@@ -73,7 +73,9 @@ class Tank extends Phaser.GameObjects.Image {
         if (this.health > 0) {
             this.health -= 0.05
             this.redrawLifebar()
-        } else {
+        }
+
+        if (this.health <= 0) {
             this.destroy()
             this.barrel.destroy()
             this.lifeBar.destroy()
