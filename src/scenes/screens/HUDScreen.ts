@@ -17,6 +17,8 @@ class HUDScreen extends BaseScreen {
         this.createScoreBitmapText()
 
         ScoreManager.emitter.on('score-updated', this.handleScoreUpdated)
+
+        this.setScrollFactor(0, 0)
     }
 
     private createPauseButton(): void {

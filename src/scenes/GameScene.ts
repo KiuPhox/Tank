@@ -18,6 +18,10 @@ class GameScene extends Phaser.Scene {
     private pauseScreen: PauseScreen
     private gameOverScreen: GameOverScreen
 
+    private mainCamera: Phaser.Cameras.Scene2D.Camera
+    private uiCamera: Phaser.Cameras.Scene2D.Camera
+    public blurFx: Phaser.FX.Blur
+
     constructor() {
         super({ key: 'GameScene' })
     }
@@ -36,8 +40,26 @@ class GameScene extends Phaser.Scene {
         this.gameScreen = new GameScreen({ scene: this }).setActive(false)
         this.menuScreen = new MenuScreen({ scene: this })
         this.HUDScreen = new HUDScreen({ scene: this }).setActive(false)
-        this.pauseScreen = new PauseScreen({ scene: this }).setVisible(false)
-        this.gameOverScreen = new GameOverScreen({ scene: this }).setVisible(false)
+        this.pauseScreen = new PauseScreen({ scene: this })
+            .setVisible(false)
+            .setPosition(this.scale.width / 2, this.scale.height / 2)
+        this.gameOverScreen = new GameOverScreen({ scene: this })
+            .setVisible(false)
+            .setPosition(this.scale.width / 2, this.scale.height / 2)
+
+        this.mainCamera = this.cameras.main
+        this.uiCamera = this.cameras.add()
+
+        this.mainCamera.ignore([
+            this.menuScreen,
+            this.HUDScreen,
+            this.pauseScreen,
+            this.gameOverScreen,
+        ])
+
+        this.uiCamera.ignore(this.gameScreen)
+
+        this.blurFx = this.mainCamera.postFX.addBlur(0, 0, 0, 0)
 
         GameManager.emitter.on('state-changed', this.onGameStateChanged)
     }
@@ -54,21 +76,6 @@ class GameScene extends Phaser.Scene {
     update(time: number, delta: number): void {
         this.gameScreen.update(time, delta)
         this.menuScreen.update()
-        const cameraPos = new Phaser.Math.Vector2(
-            this.cameras.main.scrollX,
-            this.cameras.main.scrollY
-        )
-        this.menuScreen.setPosition(cameraPos.x, cameraPos.y)
-        this.HUDScreen.setPosition(cameraPos.x, cameraPos.y)
-        this.pauseScreen.setPosition(
-            cameraPos.x + this.scale.width / 2,
-            cameraPos.y + this.scale.height / 2
-        )
-
-        this.gameOverScreen.setPosition(
-            cameraPos.x + this.scale.width / 2,
-            cameraPos.y + this.scale.height / 2
-        )
     }
 
     private onGameStateChanged = (gameState: GameState) => {

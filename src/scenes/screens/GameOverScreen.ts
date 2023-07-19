@@ -2,6 +2,7 @@ import PlayerDataManager from '../../managers/PlayerDataManager'
 import ScoreManager from '../../managers/ScoreManager'
 import Button from '../../objects/buttons/Button'
 import { IScreen } from '../../types/screen'
+import GameScene from '../GameScene'
 import BaseScreen from './BaseScreen'
 
 class GameOverScreen extends BaseScreen {
@@ -97,6 +98,9 @@ class GameOverScreen extends BaseScreen {
             scale: value ? 1 : 0,
             duration: 300,
             ease: value ? 'Back.out' : 'Quad.out',
+            onUpdate: () => {
+                (this.scene as GameScene).blurFx.strength = this.scale * 1.5
+            },
             onComplete: () => {
                 if (!value) {
                     super.setActive(value)
