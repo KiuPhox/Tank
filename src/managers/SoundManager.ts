@@ -12,7 +12,16 @@ class SoundManager {
         if (this.isInsideCameraView(source)) {
             this.scene.sound.play('shoot', {
                 detune: Random.Int(1, 200),
-                volume: 0.8,
+                volume: 0.6,
+            })
+        }
+    }
+
+    public static playHitSound(source: Phaser.Math.Vector2) {
+        if (this.isInsideCameraView(source)) {
+            this.scene.sound.play('hit', {
+                detune: Random.Int(1, 200),
+                volume: 0.3,
             })
         }
     }

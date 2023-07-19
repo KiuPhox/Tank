@@ -1,3 +1,4 @@
+import SoundManager from '../managers/SoundManager'
 import { IImage } from '../types/image'
 
 class Tank extends Phaser.GameObjects.Image {
@@ -73,6 +74,7 @@ class Tank extends Phaser.GameObjects.Image {
         if (this.health > 0) {
             this.health -= 0.05
             this.redrawLifebar()
+            SoundManager.playHitSound(new Phaser.Math.Vector2(this.x, this.y))
         }
 
         if (this.health <= 0) {
