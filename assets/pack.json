@@ -116,6 +116,11 @@
                 "type": "audio",
                 "key": "shoot",
                 "url": "./assets/audios/shoot.wav"
+            },
+            {
+                "type": "audio",
+                "key": "hit",
+                "url": "./assets/audios/hit.ogg"
             }
         ]
     }
