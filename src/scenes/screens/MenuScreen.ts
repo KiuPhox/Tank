@@ -7,6 +7,7 @@ import BaseScreen from './BaseScreen'
 class MenuScreen extends BaseScreen {
     private startKey: Phaser.Input.Keyboard.Key
     private bitmapTexts: Phaser.GameObjects.BitmapText[] = []
+    private background: Phaser.GameObjects.Rectangle
 
     constructor(s: IScreen) {
         super(s)
@@ -16,12 +17,21 @@ class MenuScreen extends BaseScreen {
             this.startKey.isDown = false
         }
 
+        this.background = s.scene.add.rectangle(
+            0,
+            0,
+            s.scene.scale.width + 100,
+            s.scene.scale.height + 100,
+            0x000000
+        )
         this.bitmapTexts.push(s.scene.add.bitmapText(0, 0, 'font', 'PRESS S TO PLAY', 30))
         this.bitmapTexts.push(s.scene.add.bitmapText(0, 0, 'font', 'TANK', 100))
 
-        Phaser.Display.Align.In.Center(this.bitmapTexts[0], (this.scene as GameScene).zone, 0, 30)
-        Phaser.Display.Align.In.Center(this.bitmapTexts[1], (this.scene as GameScene).zone, 0, -30)
+        Phaser.Display.Align.In.Center(this.bitmapTexts[0], (s.scene as GameScene).zone, 0, 30)
+        Phaser.Display.Align.In.Center(this.bitmapTexts[1], (s.scene as GameScene).zone, 0, -30)
+        Phaser.Display.Align.In.Center(this.background, (s.scene as GameScene).zone, 0, -30)
 
+        this.add(this.background)
         this.add(this.bitmapTexts)
 
         GameManager.emitter.on('state-changed', this.onGameStateChanged)
@@ -37,7 +47,14 @@ class MenuScreen extends BaseScreen {
         if (gameState === GameState.READY) {
             this.setActive(true)
         } else {
-            this.setActive(false)
+            this.scene.add.tween({
+                targets: this,
+                alpha: 0,
+                duration: 1000,
+                onComplete: () => {
+                    this.setActive(false)
+                },
+            })
         }
     }
 }

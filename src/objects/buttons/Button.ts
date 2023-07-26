@@ -42,7 +42,7 @@ class Button extends Phaser.GameObjects.Container {
         this.button.on('pointerover', this.onPointerOver)
 
         this.text = this.scene.add.bitmapText(0, 0, 'font', b.text, b.size)
-        Phaser.Display.Align.In.Center(this.text, this.button)
+        Phaser.Display.Align.In.Center(this.text, this.button, 0, -5)
 
         this.add([this.button, this.text])
     }

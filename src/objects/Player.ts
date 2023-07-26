@@ -4,12 +4,10 @@ import Tank from './Tank'
 import GameManager from '../managers/GameManager'
 import GameState from '../managers/GameState'
 
-const MOVEMENT_SPEED = 200
+const MOVEMENT_SPEED = 600
 const ROTATE_SPEED = 0.005
 
 class Player extends Tank {
-    body: Phaser.Physics.Arcade.Body
-
     // input
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys
     private rotateKeyLeft: Phaser.Input.Keyboard.Key

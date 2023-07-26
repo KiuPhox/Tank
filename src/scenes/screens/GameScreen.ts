@@ -195,7 +195,8 @@ class GameScreen extends BaseScreen {
 
     private onGameStateChanged = (gameState: GameState) => {
         if (gameState === GameState.PLAYING) {
-            this.scene.cameras.main.startFollow(this.player)
+            this.scene.cameras.main.startFollow(this.player, false, 0.01, 0.01)
+            this.scene.cameras.main.setBounds(0, 0, this.layer?.width ?? 0, this.layer?.height ?? 0)
         } else if (gameState === GameState.READY) {
             this.scene.cameras.main.stopFollow().setScroll(0, 0)
         }

@@ -5,7 +5,7 @@ import { Random } from '../utils/Random'
 import ScoreManager from '../managers/ScoreManager'
 
 class Enemy extends Tank {
-    body: Phaser.Physics.Arcade.Body
+    private moveTween: Phaser.Tweens.Tween
 
     constructor(i: IImage) {
         super(i)
@@ -17,7 +17,7 @@ class Enemy extends Tank {
         this.barrel.setTexture('barrelRed')
 
         // tweens
-        this.scene.tweens.add({
+        this.moveTween = this.scene.tweens.add({
             targets: this,
             props: { y: this.y - 200 },
             delay: 0,
@@ -62,6 +62,16 @@ class Enemy extends Tank {
         if (this.health <= 0) {
             ScoreManager.updateScore(ScoreManager.getScore() + 1)
         }
+    }
+
+    setActive(value: boolean): this {
+        super.setActive(value)
+        if (value) {
+            this.moveTween.resume()
+        } else {
+            this.moveTween.pause()
+        }
+        return this
     }
 }
 

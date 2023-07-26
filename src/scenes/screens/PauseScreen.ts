@@ -22,6 +22,7 @@ class PauseScreen extends BaseScreen {
         this.createSoundCheckbox()
 
         this.add([this.newGameButton, this.soundCheckbox])
+        this.setAlpha(0)
     }
 
     private createModal(): void {
@@ -100,7 +101,7 @@ class PauseScreen extends BaseScreen {
 
         this.soundCheckbox.setChecked(PlayerDataManager.getSound())
 
-        this.add(this.scene.add.bitmapText(-50, -130, 'font', 'Sound', 50).setOrigin(0, 0.5))
+        this.add(this.scene.add.bitmapText(-50, -135, 'font', 'Sound', 50).setOrigin(0, 0.5))
     }
 
     public setActive(value: boolean): this {
@@ -109,6 +110,7 @@ class PauseScreen extends BaseScreen {
         this.scene.add.tween({
             targets: this,
             scale: value ? 1 : 0,
+            alpha: value ? 1 : 0,
             duration: 300,
             ease: value ? 'Back.out' : 'Quad.out',
             onUpdate: () => {
